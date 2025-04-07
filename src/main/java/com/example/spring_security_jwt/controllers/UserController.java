@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/home")
-public class HomeController {
+public class UserController {
     @Autowired
     private MemberServiceImpl memberServiceImpl;
     @Autowired
@@ -33,5 +33,11 @@ public class HomeController {
     @PostMapping("/register")
     public ResponseEntity<UserDto> saveUser(@RequestBody UserDto userDto) {
         return userService.saveUser(userDto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDto> getUserByUserId(@PathVariable long id) {
+        return userService.getUserByUserId(id);
+
     }
 }

@@ -7,4 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
     ResponseEntity<UserDto> saveUser(UserDto userDto);
+
+    ResponseEntity<UserDto> getUserByUserId(long id);
 }
+

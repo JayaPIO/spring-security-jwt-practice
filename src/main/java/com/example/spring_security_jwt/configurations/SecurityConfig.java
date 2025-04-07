@@ -1,4 +1,4 @@
-package com.example.spring_security_jwt.configs;
+package com.example.spring_security_jwt.configurations;
 
 import com.example.spring_security_jwt.security.JwtAuthenticationEntryPoint;
 import com.example.spring_security_jwt.security.JwtAuthenticationFilter;
@@ -31,6 +31,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/home/register").permitAll()
                         .requestMatchers("/home/**").authenticated()
                         .requestMatchers("/auth/login").permitAll()

@@ -10,7 +10,7 @@ public class EntityToDto {
      * @param user
      * @return UserDto
      */
-    public UserDto UserEntityToUserDto(User user) {
+    public static UserDto UserEntityToUserDto(User user) {
         return new UserDto(user.getUsername(), user.getPassword(), user.getRole());
     }
 }
