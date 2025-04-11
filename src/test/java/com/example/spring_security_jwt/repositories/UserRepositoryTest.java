@@ -1,11 +1,13 @@
 package com.example.spring_security_jwt.repositories;
 
+import com.example.spring_security_jwt.exceptions.CustomException;
 import com.example.spring_security_jwt.models.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -87,7 +89,11 @@ public class UserRepositoryTest {
      */
     @Test
     void deleteUser() {
-        User existingUser = userRepository.findByUsername("sam");
+        Optional<User> existingUserOptional = userRepository.findByUsername("sam");
+        if (existingUserOptional.isEmpty()) {
+            throw new CustomException(HttpStatus.NOT_FOUND, "user not found ");
+        }
+        User existingUser = existingUserOptional.get();
         userRepository.deleteById(existingUser.getUserId());
 
         List<User> users = userRepository.findAll();
