@@ -8,6 +8,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
+    @Column(unique = true)
     private String username;
     private String password;
     private String role;
@@ -21,7 +22,11 @@ public class User {
         this.role = role;
     }
 
-    public User(String username, String password, Object o, String role) {
+    public User(long userId, String username, String password, String role) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 
     public long getUserId() {

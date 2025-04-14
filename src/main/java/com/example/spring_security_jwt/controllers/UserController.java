@@ -2,6 +2,7 @@ package com.example.spring_security_jwt.controllers;
 
 import com.example.spring_security_jwt.dtos.UserDto;
 import com.example.spring_security_jwt.models.Member;
+import com.example.spring_security_jwt.models.User;
 import com.example.spring_security_jwt.services.UserService;
 import com.example.spring_security_jwt.services.impl.MemberServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,15 @@ public class UserController {
     public ResponseEntity<UserDto> getUserByUserId(@PathVariable long id) {
         return userService.getUserByUserId(id);
 
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
+        return userService.updateUser(userDto);
     }
 }
