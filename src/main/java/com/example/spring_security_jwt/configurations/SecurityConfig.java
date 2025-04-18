@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/home/register").permitAll()
+                        .requestMatchers("/home/users").permitAll()
                         .requestMatchers("/home/**").authenticated()
                         .requestMatchers("/auth/login").permitAll()
 
