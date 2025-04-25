@@ -6,6 +6,7 @@ import com.example.spring_security_jwt.models.User;
 import com.example.spring_security_jwt.services.UserService;
 import com.example.spring_security_jwt.services.impl.MemberServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,5 +51,11 @@ public class UserController {
     @PutMapping("/update")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
         return userService.updateUser(userDto);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
     }
 }

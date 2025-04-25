@@ -55,14 +55,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Cacheable("usersCache") // stores result in usersCache
     public ResponseEntity<UserDto> getUserByUserId(long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            UserDto userDto = EntityToDto.UserEntityToUserDto(user);
-            return ResponseEntity.status(HttpStatus.FOUND).body(userDto);
-        } else {
-            throw new CustomException(HttpStatus.NOT_FOUND, "Event Not Found With Given" + id);
-        }
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findById(id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "Event Not Found With Given" + id)));
+        User user = userOptional.get();
+        UserDto userDto = EntityToDto.UserEntityToUserDto(user);
+        return ResponseEntity.status(HttpStatus.FOUND).body(userDto);
     }
 
 
@@ -73,7 +69,7 @@ public class UserServiceImpl implements UserService {
         if (allUsers.isEmpty()) {
             throw new CustomException(HttpStatus.NO_CONTENT, "no user found ");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(allUsers);
+        return ResponseEntity.ok(allUsers);
     }
 
     @Override
@@ -99,10 +95,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isEmpty()) {
-            throw new CustomException(HttpStatus.NOT_FOUND, "user not found");
-        }
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findById(id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "user not found")));
         User existingUser = userOptional.get();
         userRepository.delete(existingUser);
 
